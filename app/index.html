@@ -229,14 +229,9 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-offset-2 col-sm-8">
           <table id="wordFreqTable" class="display" cellspacing="0" width="100%"></table>
         </div>
-        <div class="col-sm-12">
-          <table id="structureTable" class="display" cellspacing="0" width="100%"></table>
-        </div>
-      </div>
-      <div class="row">
         <div class="col-sm-12">
           <h2 class="text-center">More data, more luck</h2>
         </div>
@@ -271,6 +266,13 @@
             With the data table now generated on this page, we are able to quickly learn a few things about the poetry. Displaying only 10 results, sorting
             the order ascendingly or descendingly will give you a perspective of the top or bottom 10 poems according to the metric we want to find out by.
           </p>
+        </div>
+        <div class="col-sm-12">
+          <table id="structureTable" class="display" cellspacing="0" width="100%"></table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-offset-2 col-sm-8 text-justified">
           <p>
             For instance, If we want to know which poem has the greatest number of words per stanza, we're able to sort by that column and we find out a few
             interesting details about those with a higher word density. There are other things we can do rather quickly with this table that reveal some preliminary
@@ -372,12 +374,106 @@
           </div>
           <div class="col-sm-4">
             <p>With the whisker plot shown on the left, we can see that Frost's "The Road Not Taken" lies beyond the lower bound
-            of the overall negative sentiments of all his poetry written in this corpus.</p>
+            of the overall negative sentiments of all his poetry written in this corpus (and is also in fact the most negative in sentiment scores).</p>
             <p>This makes "The Road Not Taken" an <strong>outlier</strong> in terms of its negative sentiment, as it is the only outlier in the set of
             negative sentiments. This makes "The Road Not Taken" more negative in its sentiment score than the others with a score of
             <code>-0.68531</code>.</p>
             <p>It thus seems that "The Road Not Taken" is an unusually bitter piece written, albeit scored by a machine in terms of
             detecting negativity in tone.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h2 class="text-center">Tone Scores</h2>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Emotional Tone</div>
+                  <div class="panel-body">
+                    <label id="anger-bar-label" for="anger-bar">Analytical</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="anger-bar" role="progressbar">
+                      </div>
+                    </div>
+                    <label id="disgust-bar-label" for="disgust-bar">Analytical</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="disgust-bar" role="progressbar">
+                      </div>
+                    </div>
+                    <label id="fear-bar-label" for="fear-bar">Analytical</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="fear-bar" role="progressbar">
+                      </div>
+                    </div>
+                    <label id="joy-bar-label" for="joy-bar">Analytical</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="joy-bar" role="progressbar">
+                      </div>
+                    </div>
+                    <label id="sadness-bar-label" for="sadness-bar">Analytical</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="sadness-bar" role="progressbar">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Social Tone</div>
+                  <div class="panel-body">
+                    <label id="analytical-bar-label" for="analytical-bar">Analytical</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="analytical-bar" role="progressbar">
+                      </div>
+                    </div>
+                    <label id="confident-bar-label" for="confident-bar">Confident</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="confident-bar" role="progressbar">
+                      </div>
+                    </div>
+                    <label id="tentative-bar-label" for="tentative-bar">Tentative</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="tentative-bar" role="progressbar">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Language Tone</div>
+                  <div class="panel-body">
+                    <label id="openness_big5-bar-label" for="openness_big5-bar">Openness</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="openness_big5-bar" role="progressbar"></div>
+                    </div>
+                    <label id="conscientiousness_big5-bar-label" for="conscientiousness_big5-bar">Conscientiousness</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="conscientiousness_big5-bar" role="progressbar">
+                      </div>
+                    </div>
+                    <label id="extraversion_big5-bar-label" for="extraversion_big5-bar">Extraversion</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="extraversion_big5-bar" role="progressbar">
+                      </div>
+                    </div>
+                    <label id="agreeableness_big5-bar-label" for="agreeableness_big5-bar">Agreeableness</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="agreeableness_big5-bar" role="progressbar">
+                      </div>
+                    </div>
+                    <label id="emotional_range_big5-bar-label" for="emotional_range_big5-bar-bar">Emotional Range</label>
+                    <div class="progress">
+                      <div class="progress-bar" id="emotional_range_big5-bar" role="progressbar">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

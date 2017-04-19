@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+  /*****************
+  ** DATA PREPARATION
+  *****************/
+
   structDataForTable = structData.map((el) => {
     el.title = el.title.replace(/(\d)+ - /, '');
     if (el.ratio.toString().length > 6) { el.ratio = el.ratio.toPrecision(5); }
@@ -18,31 +23,14 @@ $(document).ready(function() {
     return Object.values(el);
   });
 
-  $('#wordFreqTable').DataTable( {
-    data: corpusWordCount,
-    columns: [{title: "Term"}, {title: "Count"}]
-  });
+  let theRoadNotTaken = Object.assign({},
+    structData.find(function(o) { return o.title == "The Road Not Taken"; }),
+    frostData.find(function(o) { return o.title == "1916 - The Road Not Taken"; })
+  );
 
-  $('#structureTable').DataTable( {
-    data: structDataForTable,
-    columns: [
-        { title: "Title" },
-        { title: "Words" },
-        { title: "Types" },
-        { title: "Ratio" },
-        { title: "Words/Sentence" },
-        { title: "Collection" },
-        { title: "Year Published" },
-        { title: "Stanzas" },
-        { title: "Lines" },
-        { title: "Lines/Stanza" },
-        { title: "Words/Stanza" },
-        { title: "Words/Line" },
-    ]
-  });
-
-  let theRoadNotTaken = structData.find(function(o) { return o.title == "The Road Not Taken"; });
-
+  /*****************
+  ** FUNCTIONS
+  *****************/
   let sort_by = function(field, reverse, primer){
     var key = primer ?
        function(x) {return primer(x[field])} :
@@ -91,37 +79,7 @@ $(document).ready(function() {
     ];
   }
 
-  nv.addGraph(function() {
-    let structureChart = nv.models.discreteBarChart()
-      .x(function(d) { return d.label })    //Specify the data accessors.
-      .y(function(d) { return d.value })
-      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-      .showValues(false);      //...instead, show the bar value right on top of each bar.
-    let structureChartData = d3.select('#structure-d3 svg');
-    structureChartData.datum(generateData('lines', false, parseFloat, 5))
-        .transition().duration(500)
-        .call(structureChart);
-    nv.utils.windowResize(structureChart.update);
-    return structureChart;
-  });
-
-  nv.addGraph(function() {
-    let sentimentChart = nv.models.discreteBarChart()
-      .x(function(d) { return d.label })    //Specify the data accessors.
-      .y(function(d) { return d.value })
-      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-      .showValues(false)      //...instead, show the bar value right on top of each bar.
-      .showXAxis(false);
-    sentimentChart.yAxis.tickFormat((d3.format('.5f')))
-    let sentimentChartData = d3.select('#sentiment-d3 svg');
-    sentimentChartData.datum(generateSentimentData())
-        .transition().duration(500)
-        .call(sentimentChart);
-    nv.utils.windowResize(sentimentChart.update);
-    return sentimentChart;
-  });
-
-  function update(property, reverse, primer, limit) {
+  function updateStructureChart(property, reverse, primer, limit) {
     nv.addGraph(function() {
       let structureChart = nv.models.discreteBarChart()
         .x(function(d) { return d.label })    //Specify the data accessors.
@@ -177,12 +135,87 @@ $(document).ready(function() {
     return [sample];
   }
 
+  function initToneScores(poem) {
+    let tones = Object.values(poem.document_tone.tone_categories);
+    tones.forEach((tone)=>{
+      tone.tones.forEach((el)=>{
+        let percentage = el.score * 100;
+        $('#'+el.tone_id+'-bar').css('width', percentage.toString() + "%");
+        if (el.score > 0.5) {
+          $('#'+el.tone_id+'-bar').addClass('progress-bar-success');
+          $('#'+el.tone_id+'-bar-label').html("<em>"+ el.tone_name + ' (' + el.score.toPrecision(4) + ')' + "</em>");
+        }
+        else {
+          $('#'+el.tone_id+'-bar').addClass('progress-bar-info');
+          $('#'+el.tone_id+'-bar-label').html(el.tone_name + ' (' + el.score.toPrecision(4) + ')');
+        }
+      });
+    });
+  }
+
+  /*****************
+  ** INITIALIZATION
+  *****************/
+
+  $('#wordFreqTable').DataTable( {
+    data: corpusWordCount,
+    columns: [{title: "Term"}, {title: "Count"}]
+  });
+
+  $('#structureTable').DataTable( {
+    data: structDataForTable,
+    columns: [
+        { title: "Title" },
+        { title: "Words" },
+        { title: "Types" },
+        { title: "Ratio" },
+        { title: "Words/Sentence" },
+        { title: "Collection" },
+        { title: "Year Published" },
+        { title: "Stanzas" },
+        { title: "Lines" },
+        { title: "Lines/Stanza" },
+        { title: "Words/Stanza" },
+        { title: "Words/Line" },
+    ]
+  });
+
+  nv.addGraph(function() {
+    let structureChart = nv.models.discreteBarChart()
+      .x(function(d) { return d.label })    //Specify the data accessors.
+      .y(function(d) { return d.value })
+      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+      .showValues(false);      //...instead, show the bar value right on top of each bar.
+    let structureChartData = d3.select('#structure-d3 svg');
+    structureChartData.datum(generateData('lines', false, parseFloat, 5))
+        .transition().duration(500)
+        .call(structureChart);
+    nv.utils.windowResize(structureChart.update);
+    return structureChart;
+  });
+
+  nv.addGraph(function() {
+    let sentimentChart = nv.models.discreteBarChart()
+      .x(function(d) { return d.label })    //Specify the data accessors.
+      .y(function(d) { return d.value })
+      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+      .showValues(false)      //...instead, show the bar value right on top of each bar.
+      .showXAxis(false);
+    sentimentChart.yAxis.tickFormat((d3.format('.5f')))
+    let sentimentChartData = d3.select('#sentiment-d3 svg');
+    sentimentChartData.datum(generateSentimentData())
+        .transition().duration(500)
+        .call(sentimentChart);
+    nv.utils.windowResize(sentimentChart.update);
+    return sentimentChart;
+  });
+
   nv.addGraph(function() {
     var chart = nv.models.boxPlotChart()
         .x(function(d) { return d.label })
         .staggerLabels(true)
         .maxBoxWidth(100) // prevent boxes from being incredibly wide
-        .yDomain([-1, 0])
+        .yDomain([-0.8, 0.1])
         ;
     d3.select('#boxplot-d3 svg')
         .datum(generateBoxPlotData())
@@ -191,11 +224,15 @@ $(document).ready(function() {
     return chart;
   });
 
+  initToneScores(theRoadNotTaken);
+  /*****************
+  ** EVENT HANDLERS
+  *****************/
   document.getElementById('btn1').addEventListener("click", function(event) {
     event.preventDefault();
     let limit = parseInt($('#limit').val());
     let sort = (parseInt($('#sort').val()) == 1) ? true : false;
     let prop = $('#property').val();
-    update(prop, sort, parseFloat, limit);
+    updateStructureChart(prop, sort, parseFloat, limit);
   });
 });

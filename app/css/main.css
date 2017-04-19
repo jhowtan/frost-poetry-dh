@@ -36,10 +36,10 @@ pre code {
   padding: 20px;
 }
 
-.panel-body {
+#structure .panel-body {
   padding: 0px;
 }
-.panel-body > img {
+#structure .panel-body > img {
   width: 100%;
   height: 100%;
 }
