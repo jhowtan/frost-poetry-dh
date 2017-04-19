@@ -336,6 +336,17 @@
         <div class="col-sm-12 text-center">
           <h1 class="section-header text-center">Tone Analysis</h1>
         </div>
+        <div class="col-sm-offset-2 col-sm-8 text-justified">
+          <p>
+            The following graph below is generated through Watson's Natural Language Understanding API, and yields the overall sentiment
+            scores for the corpus.
+          </p>
+          <p>
+            The sentiment scores range from -1 to 1, where a positive value indicate a better sentiment, and a negative value
+            indicating a poorer sentiment in terms of the tone of the document. Each document was sent to be scored by the machine,
+            which is then analyzed based on the textual contents of the document as a whole instead of using targeted phrases.
+          </p>
+        </div>
         <div class="col-md-12">
           <!-- D3 GRAPH HERE -->
           <div id="sentiment-d3">
@@ -347,10 +358,6 @@
             <h2 class="text-center">An Especially Negative Sentiment</h2>
           </div>
           <div class="col-sm-offset-2 col-sm-8 text-justified">
-            <p>
-              The sentiment scores range from -1 to 1, where a positive value indicate a better sentiment, and a negative value
-              indicating a poorer sentiment in terms of the tone of the document.
-            </p>
             <p>
               When ordered by <code>year_published</code>, the poems spanning from 1909 to 1922 generally show a trend
               of negative sentiment. The sentiment score was returned on the overall document that was passed over to the
@@ -371,7 +378,6 @@
             <code>-0.68531</code>.</p>
             <p>It thus seems that "The Road Not Taken" is an unusually bitter piece written, albeit scored by a machine in terms of
             detecting negativity in tone.</p>
-          </div>
           </div>
         </div>
       </div>
