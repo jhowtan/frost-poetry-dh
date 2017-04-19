@@ -112,7 +112,7 @@ $(document).ready(function() {
       .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
       .showValues(false)      //...instead, show the bar value right on top of each bar.
       .showXAxis(false);
-    sentimentChart.yAxis.tickFormat((d3.format('.3f')))
+    sentimentChart.yAxis.tickFormat((d3.format('.5f')))
     let sentimentChartData = d3.select('#sentiment-d3 svg');
     sentimentChartData.datum(generateSentimentData())
         .transition().duration(500)
@@ -138,6 +138,58 @@ $(document).ready(function() {
       return structureChart;
     });
   };
+
+  function generateBoxPlotData() {
+    let total = 0;
+    let f = frostData.filter((el) =>{
+      return el.sentiment.document.score < 0;
+    });
+    f.forEach(function(el){
+      total += el.sentiment.document.score;
+    });
+    let scoreList = f.map((el) => {
+      return el.sentiment.document.score;
+    });
+    scoreList = scoreList.sort(function(a,b) { return a - b; });
+    let q1 = scoreList[Math.ceil(0.25 * scoreList.length)-1];
+    let q2 = scoreList[Math.ceil(0.5 * scoreList.length)-1];
+    let q3 = scoreList[Math.ceil(0.75 * scoreList.length)-1];
+    let iqr = q3 - q1;
+    let whisker_low = q1 - 1.5*iqr;
+    let whisker_high = q3 + 1.5*iqr
+    let outliers = scoreList.filter((el)=> {
+      if (el < whisker_low) { return true; }
+      if (el > whisker_high) { return true; }
+      return false;
+    });
+    let sample = {
+      label: "Negative Sentiments Boxplot",
+      values: {
+        Q1: q1,
+        Q2: q2,
+        Q3: q3,
+        whisker_low: whisker_low,
+        whisker_high: whisker_high
+      },
+      outliers: outliers
+    };
+    console.log(sample);
+    return [sample];
+  }
+
+  nv.addGraph(function() {
+    var chart = nv.models.boxPlotChart()
+        .x(function(d) { return d.label })
+        .staggerLabels(true)
+        .maxBoxWidth(100) // prevent boxes from being incredibly wide
+        .yDomain([-1, 0])
+        ;
+    d3.select('#boxplot-d3 svg')
+        .datum(generateBoxPlotData())
+        .call(chart);
+    nv.utils.windowResize(chart.update);
+    return chart;
+  });
 
   document.getElementById('btn1').addEventListener("click", function(event) {
     event.preventDefault();

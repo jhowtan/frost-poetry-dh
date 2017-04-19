@@ -342,6 +342,38 @@
             <svg style="height:500px"/>
           </div>
         </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h2 class="text-center">An Especially Negative Sentiment</h2>
+          </div>
+          <div class="col-sm-offset-2 col-sm-8 text-justified">
+            <p>
+              The sentiment scores range from -1 to 1, where a positive value indicate a better sentiment, and a negative value
+              indicating a poorer sentiment in terms of the tone of the document.
+            </p>
+            <p>
+              When ordered by <code>year_published</code>, the poems spanning from 1909 to 1922 generally show a trend
+              of negative sentiment. The sentiment score was returned on the overall document that was passed over to the
+              Watson API for analysis. Frost's "The Road Not Taken" is not spared from the general sentiment of negativity
+              (according to Watson) as well, with a sentiment score of <code>-0.685</code>.
+            </p>
+          </div>
+          <div class="col-sm-offset-2 col-sm-4">
+            <div id="boxplot-d3">
+              <svg style="height:400px"/>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <p>With the whisker plot shown on the left, we can see that Frost's "The Road Not Taken" lies beyond the lower bound
+            of the overall negative sentiments of all his poetry written in this corpus.</p>
+            <p>This makes "The Road Not Taken" an <strong>outlier</strong> in terms of its negative sentiment, as it is the only outlier in the set of
+            negative sentiments. This makes "The Road Not Taken" more negative in its sentiment score than the others with a score of
+            <code>-0.68531</code>.</p>
+            <p>It thus seems that "The Road Not Taken" is an unusually bitter piece written, albeit scored by a machine in terms of
+            detecting negativity in tone.</p>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
 
