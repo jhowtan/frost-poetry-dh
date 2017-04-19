@@ -27,6 +27,8 @@ $(document).ready(function() {
     ]
   });
 
+  let theRoadNotTaken = structData.find(function(o) { return o.title == "The Road Not Taken"; });
+
   var sort_by = function(field, reverse, primer){
     var key = primer ?
        function(x) {return primer(x[field])} :
@@ -38,10 +40,9 @@ $(document).ready(function() {
   };
 
   function generateData(property, reverse, primer, limit) {
-    let subject = structData.find(function(o) { return o.title == "The Road Not Taken"; });
-    subject = { label: subject.title, value: subject[property.toString()]};
+    subject = { label: theRoadNotTaken.title, value: theRoadNotTaken[property.toString()]};
     v = structData.sort(sort_by(property, reverse, primer));
-    v = v.slice(0, limit+1);
+    v = v.slice(0, limit);
     v = v.map((e)=>{
       return {
         label: e.title,
@@ -60,16 +61,16 @@ $(document).ready(function() {
     ];
   }
 
-  let structureChart = nv.models.discreteBarChart()
-        .x(function(d) { return d.label })    //Specify the data accessors.
-        .y(function(d) { return d.value })
-        .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-        .showValues(false);      //...instead, show the bar value right on top of each bar.
-
-  let structureChartData = d3.select('#structure-d3 svg');
-
   nv.addGraph(function() {
-    structureChartData.datum(generateData('words_per_stanza', false, parseFloat, 10))
+    let structureChart = nv.models.discreteBarChart()
+      .x(function(d) { return d.label })    //Specify the data accessors.
+      .y(function(d) { return d.value })
+      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+      .showValues(false);      //...instead, show the bar value right on top of each bar.
+
+    let structureChartData = d3.select('#structure-d3 svg');
+
+    structureChartData.datum(generateData('lines', false, parseFloat, 5))
         .transition().duration(500)
         .call(structureChart);
     nv.utils.windowResize(structureChart.update);
@@ -77,22 +78,29 @@ $(document).ready(function() {
   });
 
   function update(property, reverse, primer, limit) {
-    let data = generateData(property, reverse, primer, limit);
-    // Update the SVG with the new data and call chart
-    structureChartData = d3.select('#structure-d3 svg');
-    structureChartData.datum(data)
-        .transition().duration(500)
-        .call(structureChart);
-    nv.utils.windowResize(structureChart.update);
+    nv.addGraph(function() {
+      let structureChart = nv.models.discreteBarChart()
+        .x(function(d) { return d.label })    //Specify the data accessors.
+        .y(function(d) { return d.value })
+        .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+        .showValues(false);      //...instead, show the bar value right on top of each bar.
+
+      let structureChartData = d3.select('#structure-d3 svg');
+
+      structureChartData.datum(generateData(property, reverse, parseFloat, limit))
+          .transition().duration(500)
+          .call(structureChart);
+      nv.utils.windowResize(structureChart.update);
+      return structureChart;
+    });
   };
 
-  document.getElementById('btn1').addEventListener("click", function() {
-    update('words_per_stanza', false, parseFloat, 10);
-  });
-  document.getElementById('btn2').addEventListener("click", function() {
-    update('lines_per_stanza', false, parseFloat, 10);
-  });
-  document.getElementById('btn3').addEventListener("click", function() {
-    update('words_per_line', false, parseFloat, 10);
+  document.getElementById('btn1').addEventListener("click", function(event) {
+    event.preventDefault();
+    let limit = parseInt($('#limit').val());
+    let sort = (parseInt($('#sort').val()) == 1) ? true : false;
+    let prop = $('#property').val();
+    console.log(limit + " " + sort, prop);
+    update(prop, sort, parseFloat, limit);
   });
 });
