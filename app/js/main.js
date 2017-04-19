@@ -9,6 +9,11 @@ $(document).ready(function() {
     return Object.values(el);
   });
 
+  frostData = frostData.map((el) => {
+    let year_published = el.title.split('-')[0].trim();
+    return Object.assign({year_published: year_published}, el);
+  });
+
   corpusWordCount = corpusWordCount.map((el) => {
     return Object.values(el);
   });
@@ -70,7 +75,7 @@ $(document).ready(function() {
     ];
   }
 
-  function generateSentimentData(frostData) {
+  function generateSentimentData() {
     let f = frostData.sort(sort_by("year_published", false, parseInt));
     let sentimentScores = f.map((el) => {
       return {
@@ -109,7 +114,7 @@ $(document).ready(function() {
       .showXAxis(false);
     sentimentChart.yAxis.tickFormat((d3.format('.3f')))
     let sentimentChartData = d3.select('#sentiment-d3 svg');
-    sentimentChartData.datum(generateSentimentData(frostData))
+    sentimentChartData.datum(generateSentimentData())
         .transition().duration(500)
         .call(sentimentChart);
     nv.utils.windowResize(sentimentChart.update);
