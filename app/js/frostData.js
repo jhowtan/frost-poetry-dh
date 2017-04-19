@@ -1,4 +1,4 @@
-[
+let frostData = [
   {
     "title": "1915 - A Dream Pang",
     "words": 126,
@@ -20759,4 +20759,4 @@
     ],
     "language": "en"
   }
-]
+];

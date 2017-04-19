@@ -38,7 +38,7 @@ $(document).ready(function() {
 
   let theRoadNotTaken = structData.find(function(o) { return o.title == "The Road Not Taken"; });
 
-  var sort_by = function(field, reverse, primer){
+  let sort_by = function(field, reverse, primer){
     var key = primer ?
        function(x) {return primer(x[field])} :
        function(x) {return x[field]};
@@ -70,20 +70,50 @@ $(document).ready(function() {
     ];
   }
 
+  function generateSentimentData(frostData) {
+    let f = frostData.sort(sort_by("year_published", false, parseInt));
+    let sentimentScores = f.map((el) => {
+      return {
+        label: el.title,
+        value: el.sentiment.document.score
+      };
+    });
+    return [
+      {
+        key: "Sentiment Score",
+        values: sentimentScores
+      }
+    ];
+  }
+
   nv.addGraph(function() {
     let structureChart = nv.models.discreteBarChart()
       .x(function(d) { return d.label })    //Specify the data accessors.
       .y(function(d) { return d.value })
       .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
       .showValues(false);      //...instead, show the bar value right on top of each bar.
-
     let structureChartData = d3.select('#structure-d3 svg');
-
     structureChartData.datum(generateData('lines', false, parseFloat, 5))
         .transition().duration(500)
         .call(structureChart);
     nv.utils.windowResize(structureChart.update);
     return structureChart;
+  });
+
+  nv.addGraph(function() {
+    let sentimentChart = nv.models.discreteBarChart()
+      .x(function(d) { return d.label })    //Specify the data accessors.
+      .y(function(d) { return d.value })
+      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+      .showValues(false)      //...instead, show the bar value right on top of each bar.
+      .showXAxis(false);
+    sentimentChart.yAxis.tickFormat((d3.format('.3f')))
+    let sentimentChartData = d3.select('#sentiment-d3 svg');
+    sentimentChartData.datum(generateSentimentData(frostData))
+        .transition().duration(500)
+        .call(sentimentChart);
+    nv.utils.windowResize(sentimentChart.update);
+    return sentimentChart;
   });
 
   function update(property, reverse, primer, limit) {
