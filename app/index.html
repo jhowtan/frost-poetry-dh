@@ -11,7 +11,7 @@
         <style>
             body {
                 padding-top: 50px;
-                padding-bottom: 20px;
+                /*padding-bottom: 20px;*/
             }
         </style>
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
@@ -124,14 +124,17 @@
             The reason I wanted to build the poem samples separately was due to the intentions of using Voyant Tools to run a corpus analysis on the text.
             By having the poems in separate documents, it was clearer to view the document differences in Voyant.
           </p>
-          <p>I have also included links to the scripts used for this project that the curious can refer to <a href="">here</a>.</p>
+          <p>You may refer to the scripts used to generate the corpus and data for this project <a href="https://github.com/jhowtan/frost-poetry-dh/tree/master/scripts">here</a>.</p>
         </div>
         <div class="col-sm-4">
           <h2>Voyant Tools</h2>
           <p>
-            he first most immediate thing that occured was to see if there were any trends between the words used across the different collections.
-            In the following Cirrus visualisations of the words used per document/corpora, a term scale of 85 was used to see if there are any repetitive words used.
-            This set of words are also retrieved after applying a filter from the stop words list provided by Voyant Tools.
+            As one of the most extensive textual analysis tools built for the purposes in Digital Humanities, I felt that it was most appropriate to begin inspecting the poetry works using Voyant Tools
+            as a first cut at the data set that I've retrieved. It is in the hopes of using Voyant that either interpretation or word count analysis will reveal more about the corpus that we are investigating.
+          </p>
+          <p>
+            Should Voyant reveal any shortcomings in the process, I will take the steps necessary to evaluate what other parameters should be supplemented
+            for more extensive approaches at examining the corpus.
           </p>
         </div>
         <div class="col-sm-4">
@@ -142,7 +145,14 @@
             In doing so, I am able to retrieve scores on the tone of the document, which is backed by <a href="https://www.ibm.com/watson/developercloud/doc/tone-analyzer/science.html">some very heavy research in language tones</a>.
             The tones are evaluated in three aspects, Emotional, Social, and Language tones, which are described in detail on <a href="https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understand-tone.html">Understanding your tone score</a>.
           </p>
-          <p>To make use of this service, I made use of the pre-existing poem files and fed them to the IBM Bluemix Watson Services, which <a href="">can be found in this script.</a></p>
+          <p>To make use of this service, I made use of the pre-existing poem files and fed them to the IBM Bluemix Watson Services, which <a href="https://github.com/jhowtan/frost-poetry-dh/blob/master/scripts/watson.js">can be found in this script.</a></p>
+          <p>
+            With Watson, I scoped the level of analysis to be at document level rather than at sentence level. This is so that we can focus more on the individual poems as a whole rather than go deep
+            into the granular sentence level to detect variances in tone. Of course, doing so at the sentence level is also possible, but will require a careful setup for it to yield meaningful, useful results to analyse at a high level.
+          </p>
+          <p>
+            The API also offered to extract keywords from each poem. I limited the response to return 10 top keywords according to their sentiment scores, hoping that it may be used at some point.
+          </p>
         </div>
       </div>
     </div>
@@ -158,7 +168,7 @@
           <h2>Using Voyant Tools</h2>
           <p>
             The most immediate thing was to see if there were any trends between the words used across the different collections.
-            In the following Cirrus visualisations of the words used per document/corpora, a term scale of 85 was used to see if there are any repetitive words used.
+            In the following Cirrus visualisations of the words used per document/corpus, a term scale of 85 was used to see if there are any repetitive words used.
             This set of words are also retrieved after applying a filter from the stop words list provided by Voyant Tools.
           </p>
         </div>
@@ -202,13 +212,17 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-sm-12">
           <table id="structureTable" class="display" cellspacing="0" width="100%"></table>
         </div>
+      </div>
+      <div class="row">
         <div class="col-sm-12">
           <h2 class="text-center">Analysis</h2>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-offset-2 col-sm-8 text-justified">
           <p>
             At a glance, we can only tell that The Road Not Taken has a set of very unique vocabulary when looked at singularly.
             It is hard to tell if there is any real impact in those words used in The Road Not Taken compared across the entire collection of poems retrieved.
@@ -235,8 +249,6 @@
             <li>Words per Line</li>
           </ul>
           <p>All of which are definitely more relevant and consumable with regards to textual analysis on poetry.</p>
-        </div>
-        <div class="col-sm-6">
           <p>
             With the data table now generated on this page, we are able to quickly learn a few things about the poetry. Displaying only 10 results, sorting
             the order ascendingly or descendingly will give you a perspective of the top or bottom 10 poems according to the metric we want to find out by.
@@ -248,12 +260,16 @@
           </p>
           <p>With the data now at hand, let's investigate through visualising this set of data to see if any patterns emerge.</p>
         </div>
-        <div class="col-sm-12">
+      </div>
+      <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+          <button class="btn btn-success" id="btn1">Visualise</button>
+        </div>
+        <div class="col-md-offset-2 col-md-8">
           <!-- D3 GRAPHS HERE -->
-          <div id="chart-from-table">
-            <svg style='height:600px'/>
+          <div id="structure-d3">
+            <svg style="height:500px"/>
           </div>
-
         </div>
       </div>
 
@@ -270,7 +286,13 @@
     <div class="container-fluid" id="conclusion">
       <div class="row">
         <div class="col-sm-12 text-center">
-          <h1 class="section-header text-center">Conclusion</h1>
+          <h1 class="section-header text-center">Conclusion and Reflections</h1>
+        </div>
+        <div class="col-sm-6">
+          <h2>Limitations</h2>
+          <h2>Training (or lack thereof)</h2>
+          <h2>Defining a Scope</h2>
+          <h2>Further Extensions</h2>
         </div>
       </div>
     </div>

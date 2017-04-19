@@ -27,42 +27,72 @@ $(document).ready(function() {
     ]
   });
 
-  function generateData() {
-    v = structData.filter(function(el) {
-      return (el.words_per_line > 7);
-    });
+  var sort_by = function(field, reverse, primer){
+    var key = primer ?
+       function(x) {return primer(x[field])} :
+       function(x) {return x[field]};
+    reverse = !reverse ? 1 : -1;
+    return function (a, b) {
+      return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+    }
+  };
+
+  function generateData(property, reverse, primer, limit) {
+    let subject = structData.find(function(o) { return o.title == "The Road Not Taken"; });
+    subject = { label: subject.title, value: subject[property.toString()]};
+    v = structData.sort(sort_by(property, reverse, primer));
+    v = v.slice(0, limit+1);
     v = v.map((e)=>{
       return {
         label: e.title,
-        value: e.words_per_line
+        value: e[property.toString()]
       };
     });
+    let exists = v.find(function(o) { return o.title == "The Road Not Taken"; });
+    if (exists === undefined) {
+      v.unshift(subject);
+    }
     return [
       {
-        key: "Word Per Line",
+        key: property.toString(),
         values: v
       }
     ];
   }
 
-  nv.addGraph(function() {
-    var chart = nv.models.discreteBarChart()
+  let structureChart = nv.models.discreteBarChart()
         .x(function(d) { return d.label })    //Specify the data accessors.
         .y(function(d) { return d.value })
         .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-        // .tooltips(true)        //Don't show tooltips
-        .showValues(false);       //...instead, show the bar value right on top of each bar.
+        .showValues(false);      //...instead, show the bar value right on top of each bar.
 
-    d3.select('#chart-from-table svg')
-        .datum(generateData())
-        // .transition().duration(500)
-        .call(chart);
+  let structureChartData = d3.select('#structure-d3 svg');
 
-    nv.utils.windowResize(chart.update);
-
-    return chart;
+  nv.addGraph(function() {
+    structureChartData.datum(generateData('words_per_stanza', false, parseFloat, 10))
+        .transition().duration(500)
+        .call(structureChart);
+    nv.utils.windowResize(structureChart.update);
+    return structureChart;
   });
 
+  function update(property, reverse, primer, limit) {
+    let data = generateData(property, reverse, primer, limit);
+    // Update the SVG with the new data and call chart
+    structureChartData = d3.select('#structure-d3 svg');
+    structureChartData.datum(data)
+        .transition().duration(500)
+        .call(structureChart);
+    nv.utils.windowResize(structureChart.update);
+  };
 
-
+  document.getElementById('btn1').addEventListener("click", function() {
+    update('words_per_stanza', false, parseFloat, 10);
+  });
+  document.getElementById('btn2').addEventListener("click", function() {
+    update('lines_per_stanza', false, parseFloat, 10);
+  });
+  document.getElementById('btn3').addEventListener("click", function() {
+    update('words_per_line', false, parseFloat, 10);
+  });
 });
