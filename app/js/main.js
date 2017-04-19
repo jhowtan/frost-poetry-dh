@@ -137,20 +137,31 @@ $(document).ready(function() {
 
   function initToneScores(poem) {
     let tones = Object.values(poem.document_tone.tone_categories);
+    let poemTitles = frostData.map((el) => {
+      return el.title;
+    });
+    poemTitles.forEach((title) =>{
+      $('#poem-title').append("<option value=\"" + title + "\">" + title + "</option>");
+    });
     tones.forEach((tone)=>{
       tone.tones.forEach((el)=>{
         let percentage = el.score * 100;
         $('#'+el.tone_id+'-bar').css('width', percentage.toString() + "%");
         if (el.score > 0.5) {
-          $('#'+el.tone_id+'-bar').addClass('progress-bar-success');
-          $('#'+el.tone_id+'-bar-label').html("<em>"+ el.tone_name + ' (' + el.score.toPrecision(4) + ')' + "</em>");
+          $('#'+el.tone_id+'-bar').addClass('progress-bar progress-bar-success');
+          $('#'+el.tone_id+'-bar-label').html("<em>"+ el.tone_name + ' (' + el.score.toPrecision(4) + ' - Likely)' + "</em>");
         }
         else {
-          $('#'+el.tone_id+'-bar').addClass('progress-bar-info');
-          $('#'+el.tone_id+'-bar-label').html(el.tone_name + ' (' + el.score.toPrecision(4) + ')');
+          $('#'+el.tone_id+'-bar').addClass('progress-bar progress-bar-info');
+          $('#'+el.tone_id+'-bar-label').html(el.tone_name + ' (' + el.score.toPrecision(4) + ' - Unlikely)');
         }
       });
     });
+  }
+
+  function toggleToneScores(poemTitle) {
+    poem = frostData.find(function(o) { return o.title == poemTitle; });
+    initToneScores(poem);
   }
 
   /*****************
@@ -234,5 +245,11 @@ $(document).ready(function() {
     let sort = (parseInt($('#sort').val()) == 1) ? true : false;
     let prop = $('#property').val();
     updateStructureChart(prop, sort, parseFloat, limit);
+  });
+  document.getElementById('poem-title').addEventListener("change", function(event) {
+    event.preventDefault();
+    let poemTitle = $('#poem-title').val();
+    $('.progress-bar').removeClass();
+    toggleToneScores(poemTitle);
   });
 });
