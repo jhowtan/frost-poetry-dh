@@ -97,17 +97,7 @@ $(document).ready(function() {
     });
   };
 
-  function generateBoxPlotData() {
-    let total = 0;
-    let f = frostData.filter((el) =>{
-      return el.sentiment.document.score < 0;
-    });
-    f.forEach(function(el){
-      total += el.sentiment.document.score;
-    });
-    let scoreList = f.map((el) => {
-      return el.sentiment.document.score;
-    });
+  function generateBoxPlotData(label, scoreList) {
     scoreList = scoreList.sort(function(a,b) { return a - b; });
     let q1 = scoreList[Math.ceil(0.25 * scoreList.length)-1];
     let q2 = scoreList[Math.ceil(0.5 * scoreList.length)-1];
@@ -120,8 +110,8 @@ $(document).ready(function() {
       if (el > whisker_high) { return true; }
       return false;
     });
-    let sample = {
-      label: "Negative Sentiments Boxplot",
+    return {
+      label: label,
       values: {
         Q1: q1,
         Q2: q2,
@@ -131,12 +121,11 @@ $(document).ready(function() {
       },
       outliers: outliers
     };
-    console.log(sample);
-    return [sample];
   }
 
   function initToneScores(poem) {
     let tones = Object.values(poem.document_tone.tone_categories);
+    frostData = frostData.sort(sort_by("year_published", false, parseInt));
     let poemTitles = frostData.map((el) => {
       return el.title;
     });
@@ -228,14 +217,80 @@ $(document).ready(function() {
         .maxBoxWidth(100) // prevent boxes from being incredibly wide
         .yDomain([-0.8, 0.1])
         ;
+    let f = frostData.filter((el) =>{
+      return el.sentiment.document.score < 0;
+    });
+    let scoreList = f.map((el) => {
+      return el.sentiment.document.score;
+    });
+    let data = [];
+    data.push(generateBoxPlotData("Negative Sentiments Boxplot", scoreList));
     d3.select('#boxplot-d3 svg')
-        .datum(generateBoxPlotData())
+        .datum(data)
         .call(chart);
     nv.utils.windowResize(chart.update);
     return chart;
   });
 
+  function toneBoxPlots() {
+    let categoryList = frostData.map((el) => {
+        return el.document_tone.tone_categories;
+    });
+    console.log("CategoryList", categoryList);
+    let data = [];
+    for (var i = 0; i<categoryList.length; i++) {
+      let selector = `#${categoryList.category_id}-d3`;
+      data = [];
+      let list = categoryList[i];
+      for (var j = 0; j<list.length; j++) {
+        let data = [];
+        data.push(generateBoxPlotData(`${list[j].category_name} Boxplot`, list[j].tones));
+      }
+      nv.addGraph(function() {
+          var chart = nv.models.boxPlotChart()
+              .x(function(d) { return d.label })
+              .staggerLabels(true)
+              .maxBoxWidth(100) // prevent boxes from being incredibly wide
+              .yDomain([0.00, 1.00]);
+
+          d3.select(selector + ' svg')
+              .datum(data)
+              .call(chart);
+          nv.utils.windowResize(chart.update);
+
+          return chart;
+        });
+    }
+    // categoryList.forEach((list) => {
+    //   console.log("List", list);
+    //   let selector = `#${list.category_id}-d3`;
+
+    //   nv.addGraph(function() {
+    //     console.log('List in addGraph', list);
+    //     var chart = nv.models.boxPlotChart()
+    //         .x(function(d) { return d.label })
+    //         .staggerLabels(true)
+    //         .maxBoxWidth(100) // prevent boxes from being incredibly wide
+    //         .yDomain([0.00, 1.00]);
+
+    //     let data = [];
+    //     list.forEach((el) => {
+    //       console.log('Enum list', el.tones);
+    //       data.push(generateBoxPlotData(`${el.category_name} Boxplot`, el.tones));
+    //     });
+    //     console.log('Data', data);
+    //     d3.select(selector + ' svg')
+    //         .datum(data)
+    //         .call(chart);
+    //     nv.utils.windowResize(chart.update);
+
+    //     return chart;
+    //   });
+    // });
+  }
+
   initToneScores(theRoadNotTaken);
+  toneBoxPlots();
   /*****************
   ** EVENT HANDLERS
   *****************/
