@@ -9,6 +9,15 @@ $(document).ready(function() {
     return Object.values(el);
   });
 
+  corpusWordCount = corpusWordCount.map((el) => {
+    return Object.values(el);
+  });
+
+  $('#wordFreqTable').DataTable( {
+    data: corpusWordCount,
+    columns: [{title: "Term"}, {title: "Count"}]
+  });
+
   $('#structureTable').DataTable( {
     data: structDataForTable,
     columns: [
@@ -100,7 +109,6 @@ $(document).ready(function() {
     let limit = parseInt($('#limit').val());
     let sort = (parseInt($('#sort').val()) == 1) ? true : false;
     let prop = $('#property').val();
-    console.log(limit + " " + sort, prop);
     update(prop, sort, parseFloat, limit);
   });
 });

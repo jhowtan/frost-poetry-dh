@@ -165,14 +165,21 @@
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <h2>Using Voyant Tools</h2>
+          <h2 class="text-center">Using Voyant Tools</h2>
+        </div>
+        <div class="col-sm-offset-2 col-sm-8 text-justified">
           <p>
             The most immediate thing was to see if there were any trends between the words used across the different collections.
             In the following Cirrus visualisations of the words used per document/corpus, a term scale of 85 was used to see if there are any repetitive words used.
             This set of words are also retrieved after applying a filter from the stop words list provided by Voyant Tools.
           </p>
+          <p>
+            Arguably, much can be done from these word clouds. For instance, the top/most frequently used words can be used in forming n-grams to perform an n-grams analysis
+            through Google Books' N-gram viewer to see if any of these terms yield an increase in popularity over certain time periods, so as to investigate if a correlation
+            exists between the words used in "The Road Not Taken" and in popular culture (in books).
+          </p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">Entire Corpus</div>
             <div class="panel-body">
@@ -180,7 +187,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">The Road Not Taken</div>
             <div class="panel-body">
@@ -212,15 +219,26 @@
             </div>
           </div>
         </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">Miscellaneous Poems to 1920, 1920</div>
+            <div class="panel-body">
+              <img src="img/misc.svg" alt="Miscellaneous Poems Word Cloud">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="row">
+        <div class="col-sm-12">
+          <table id="wordFreqTable" class="display" cellspacing="0" width="100%"></table>
+        </div>
         <div class="col-sm-12">
           <table id="structureTable" class="display" cellspacing="0" width="100%"></table>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <h2 class="text-center">Analysis</h2>
+          <h2 class="text-center">More data, more luck</h2>
         </div>
         <div class="col-sm-offset-2 col-sm-8 text-justified">
           <p>
@@ -263,6 +281,12 @@
       </div>
       <div class="row">
         <div class="col-md-offset-2 col-md-2">
+          <h3>Discrete Property Comparison</h3>
+          <p>
+            The form below controls the visualisation to its right.
+            Tweak the values below to visualize a new graph.
+            Slice and dice the parameters to see how each discrete property relates to the other poems by Frost.
+          </p>
           <form>
             <div class="form-group">
               <label for="limit">Number of Poems</label>
@@ -297,13 +321,14 @@
           </form>
         </div>
         <div class="col-md-6">
-          <!-- D3 GRAPHS HERE -->
+          <!-- D3 GRAPH HERE -->
           <div id="structure-d3">
             <svg style="height:500px"/>
           </div>
         </div>
       </div>
-
+      <hr>
+      <!-- END OF STRUCTURE -->
     </div>
 
     <div class="container-fluid" id="tone">
@@ -340,6 +365,7 @@
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.js"></script>
+    <script src="js/wordCount.js"></script>
     <script src="js/structData.js"></script>
     <script src="js/main.js"></script>
   </body>
