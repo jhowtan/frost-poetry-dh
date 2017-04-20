@@ -50,17 +50,15 @@
         <div class="col-sm-12">
           <h1 class="section-header text-center">Introduction</h1>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-offset-2 col-sm-4">
           <blockquote cite="http://www.smithsonianmag.com/smithsonian-institution/what-gives-robert-frosts-road-not-taken-its-power-180956200/#ZHPjZmUGX3emje1k.99">
             <p>1915 became the year in which he became recognized as America’s quintessential poet; in August, the Atlantic Monthly published what is perhaps Frost’s most well-known work, “The Road Not Taken.”</p>
             <footer>David C. Ward, August 10, 2015</footer>
           </blockquote>
-
           <blockquote cite="https://www.theparisreview.org/blog/2015/09/11/the-most-misread-poem-in-america/">
             <p>Over the past thirty-five years alone, language from Frost’s poem has appeared in nearly two thousand news stories worldwide, which yields a rate of more than once a week. In addition, “The Road Not Taken” appears as a title, subtitle, or chapter heading in more than four hundred books by authors other than Robert Frost, on subjects ranging from political theory to the impending zombie apocalypse.</p>
             <footer>David Orr, September 11, 2015</footer>
           </blockquote>
-
           <blockquote cite="http://lithub.com/youre-probably-misreading-robert-frosts-most-famous-poem/">
             <p>
               My poems—I should suppose everybody’s poems—are all
@@ -73,7 +71,7 @@
             <footer>Robert Frost to Leonidas W. Payne Jr., November 1, 1927</footer>
           </blockquote>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <h2>A digital textual analysis approach to the works of Robert Frost</h2>
           <p>
             The premise for this project stems from the popularity of Robert Frost's poetry, as well the recurring topic that the popular poem, "The Road Not Taken",
@@ -101,13 +99,13 @@
 
     <div class="container-fluid" id="methodology">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12 col-md-offset-2 col-md-8">
           <h1 class="section-header text-center">Methodology</h1>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-4">
-          <h2>Information Retrieval</h2>
+        <div class="col-sm-12 col-md-offset-2 col-md-8">
+          <h2 class="text-center">Information Retrieval</h2>
           <p>
             To begin the study, I had to first retrieve and build the corpus. There's <a href="https://archive.org/details/poemsofrobertfro029898mbp">an online source for a complete collection of Robert Frost's poetry in entirety</a>.
             However, it wasn't properly OCR'd, and I had to look for a way to extract data in a way that can be used separately rather than in one contiguous text form.
@@ -126,8 +124,8 @@
           </p>
           <p>You may refer to the scripts used to generate the corpus and data for this project <a href="https://github.com/jhowtan/frost-poetry-dh/tree/master/scripts">here</a>.</p>
         </div>
-        <div class="col-sm-4">
-          <h2>Voyant Tools</h2>
+        <div class="col-sm-12 col-md-offset-2 col-md-8">
+          <h2 class="text-center">Voyant Tools</h2>
           <p>
             As one of the most extensive textual analysis tools built for the purposes in Digital Humanities, I felt that it was most appropriate to begin inspecting the poetry works using Voyant Tools
             as a first cut at the data set that I've retrieved. It is in the hopes of using Voyant that either interpretation or word count analysis will reveal more about the corpus that we are investigating.
@@ -137,8 +135,8 @@
             for more extensive approaches at examining the corpus.
           </p>
         </div>
-        <div class="col-sm-4">
-          <h2>IBM Watson</h2>
+        <div class="col-sm-12 col-md-offset-2 col-md-8">
+          <h2 class="text-center">IBM Watson</h2>
           <p>To add on to another dimension of the text analysis, I was inspired to use the IBM Watson's Natural Language Understanding API to process the poems at scale.</p>
           <p>
             The IBM Watson's API is useful because it provides a comprehensive psycholinguistic model to analyse the text we are supplying the model.
@@ -384,8 +382,18 @@
         </div>
         <hr>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-offset-2 col-sm-8">
             <h2 class="text-center">Tone Scores</h2>
+            <p>
+              "The Road Not Taken" is preset as the default poem to display for its tone analysis scores. In each of the panels, it reveals some information
+              about what the Watson Tone Analyzer service has found on the contents of the poem. Scores greater than <code>0.5</code> indicate a greater likelihood
+              of the tone property, and vice versa.
+            </p>
+            <p>
+              In this section, I have also provided a switch for readers to switch between all poetry that can be obtained from this corpus, beginning from 1909 to 1922.
+              Select another poem to observe the changes in the tone scores.
+              For more information on what the scores mean: <a href="https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understand-tone.html">Understand your tone score</a>.
+            </p>
           </div>
           <div class="col-sm-12">
             <div class="text-center">
@@ -489,20 +497,36 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-xs-12 col-md-6">
                 <div id="emotion_tone-d3">
                   <svg style="height:350px"/>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-xs-12 col-md-6">
+                <h2>Emotional Tone Boxplot</h2>
+                <p>Lorem ipsum lorem lorem ipsum</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
                 <div id="social_tone-d3">
                   <svg style="height:350px"/>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-xs-12 col-md-6">
+                <h2>Social Tone Boxplot</h2>
+                <p>Lorem ipsum lorem lorem ipsum</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
                 <div id="language_tone-d3">
                   <svg style="height:350px"/>
                 </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <h2>Language Tone Boxplot</h2>
+                <p>Lorem ipsum lorem lorem ipsum</p>
               </div>
             </div>
           </div>
@@ -515,15 +539,151 @@
         <div class="col-sm-12 text-center">
           <h1 class="section-header text-center">Conclusion and Reflections</h1>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-offset-2 col-sm-8">
           <h2>Limitations</h2>
           <p>
             As the field of Digital Humanities is still rather new, there seems to be a lack of best practices and documentation going around for how to
-            approach the analysis of literary text (in this case). Most tools
+            approach the analysis of literary text (in this case). Most tools that are provided by scientists and DH scholars mostly tell you what they are for,
+            but not quite thoroughly on how to use them effectively. For instance, with Voyant Tools, unless I have had the literary training to approach the subject,
+            the visualisations and content distilled from the corpus meant very little to me, and it was also hard to spot any patterns unless further manipulation
+            is performed (as evidenced in the course of this project).
+          </p>
+          <p>
+            Visualisations work much better on quantitative sets of data, and it was also hard to visualize some sets of the data in terms of multiple parameters (for
+            example, comparing words per line to, perhaps the year of publishing to observe any trends in verbosity) because the published year of the book is not
+            distinctively discrete (many published in the same year). It was also hard to discern what would be a good approach to choose parameters for analysis because
+            properties like word count seem so arbitrary and lack meaning unless applied to an appropriate context.
           </p>
           <h2>Training (or lack thereof)</h2>
+          <p>
+            It would perhaps been better should I have been more rigorously grounded in any of the relevant areas in this DH study. These areas include the domains of
+            statistical analysis, and literary training. My main concern was that I was trying hard not to force the data in any way to fit the hypothesis I was testing for.
+            There would undoubtedly be more that I could have looked into, perhaps with fairer comparison methods to gain a more objective point of view on the corpus.
+            That said, I am also sure that there may be biases that will be implicated.
+          </p>
           <h2>Defining a Scope</h2>
+          <p>
+            I tried adopting a storytelling approach to this project. I assumed some basic premises for me to set off on this journey of discovery
+            based on the text corpus, as well as statistic analysis on the Watson data. Then I went on to bring the reader (you!) through my thought processes
+            and the methods I've used to visualise and investigate the corpus. I found this to be an interesting manner of representing my stream of consciousness
+            when looking at the results of the textual analysis tools, but it was also risky should there be inconclusive results from the findings.
+          </p>
+            Choosing a topic to look into has probably been the hardest part for this project since the DH methods are so broadly applied, and it seemed as though
+            I had to be careful not to treat the digital methods as a hammer to every nail.
+          </p>
           <h2>Further Extensions</h2>
+          <p>
+            There is definitely more that one can do with the data, even from such a small scope of 90 poems. With more poems (and text) to be put through such
+            methods, I am sure there can be more insights to be derived from such works.
+          </p>
+          <p>
+            From the structural analysis point of view, I could have done more in terms of looking at poetry forms in a stricter manner. The groups of form, primarily,
+            the Lyric, Narrative, and Dramatic forms were not explored widely enough in this DH project, and I could have gone deeper to look into the stanzaic, fixed,
+            and continuous forms of the poetry. Unfortunately, it was difficult or impossible to find a database out there which has already performed such analysis
+            on the poetry for me to perform other visualisations for comparison purposes. This may perhaps be a suitable extension in this study.
+          </p>
+          <div id="poem-structure-examples">
+            <table class="table table-bordered">
+              <tbody><tr>
+                <td width="25%" align="CENTER" valign="BOTTOM"><strong>Lyric</strong></td>
+                <td width="25%">&nbsp;My November
+                  Guest</td>
+                <td width="25%">&nbsp;Mowing</td>
+                <td width="25%">&nbsp;A Late Walk</td>
+              </tr>
+              <tr>
+                <td width="25%" align="CENTER"><strong>Narrative</strong></td>
+                <td width="25%">&nbsp;Out, Out</td>
+                <td width="25%">&nbsp;Love and a Question</td>
+                <td width="25%">&nbsp;Brown's Descent</td>
+              </tr>
+              <tr>
+                <td width="25%" align="CENTER"><strong>Dramatic</strong></td>
+                <td width="25%">&nbsp;Death of the Hired Man</td>
+                <td width="25%">&nbsp;Home Burial</td>
+                <td width="25%">&nbsp;The Witch
+                  of Coos</td>
+              </tr></tbody>
+            </table>
+            <br>
+            <table class="table table-bordered">
+              <tbody><tr>
+                <td width="25%">
+                  <center>&nbsp;<b>Stanzaic Form</b></center></td>
+                <td width="25%">&nbsp;</td>
+                <td width="25%">&nbsp;</td>
+                <td width="25%">&nbsp;</td>
+              </tr>
+              <tr>
+                <td width="25%">&nbsp;Couplet</td>
+                <td width="25%">&nbsp;The Secret Sits</td>
+                <td width="25%">&nbsp;The Tuft of Flowers</td>
+                <td width="25%">&nbsp;A Minor Bird</td>
+              </tr>
+              <tr>
+                <td width="25%">&nbsp;Tercet (Triplets)</td>
+                <td width="25%">Acquainted with the Night</td>
+                <td width="25%">&nbsp;A Star in a Stoneboat</td>
+                <td width="25%">&nbsp;Provide, Provide</td>
+              </tr>
+              <tr>
+                <td width="25%">&nbsp;Quatrain</td>
+                <td width="25%">&nbsp;Devotion</td>
+                <td width="25%">&nbsp;Stopping by Woods</td>
+                <td width="25%">&nbsp;Good Hours</td>
+              </tr>
+              <tr>
+                <td width="25%">&nbsp;Quintet</td>
+                <td width="25%">&nbsp;My November Guest</td>
+                <td width="25%">The Road Not Taken</td>
+                <td width="25%">&nbsp;Bond and Free</td>
+              </tr>
+              <tr>
+                <td width="25%">Sestet</td>
+                <td width="25%">&nbsp;Spring Pools</td>
+                <td width="25%">The Freedom of the Moon</td>
+                <td width="25%">&nbsp;Closed for Good</td>
+              </tr>
+              <tr>
+                <td width="25%">&nbsp;Octave</td>
+                <td width="25%">&nbsp;Nothing Gold Can Stay</td>
+                <td width="25%">Two Tramps in Mud Time</td>
+                <td width="25%">&nbsp;Love and a Question</td>
+              </tr>
+              <tr>
+                <td width="25%">
+                  <center>&nbsp;<b>Fixed Form</b></center></td>
+                <td width="25%">&nbsp;</td>
+                <td width="25%">&nbsp;</td>
+                <td width="25%">&nbsp;</td>
+              </tr>
+              <tr>
+                <td width="25%">&nbsp;Sonnet</td>
+                <td width="25%">&nbsp;Design</td>
+                <td width="25%">&nbsp;Mowing</td>
+                <td width="25%">&nbsp;The Silken Tent</td>
+              </tr>
+              <tr>
+                <td width="25%">&nbsp;Blank Verse</td>
+                <td width="25%">&nbsp;Mending Wall</td>
+                <td width="25%">&nbsp;Birches</td>
+                <td width="25%">&nbsp;Out, Out</td>
+              </tr>
+              <tr>
+                <td width="25%">
+                  <center>&nbsp;<b>Continuous Form</b></center></td>
+                <td width="25%">&nbsp;Storm Fear</td>
+                <td width="25%">&nbsp;After Apple-Picking</td>
+                <td width="25%">&nbsp;Mending Wall</td>
+              </tr></tbody>
+            </table>
+            <small> Source: (Poetry) Form - <a href="www.frostfriends.org/form.html#form">www.frostfriends.org/form.html</a></small>
+          </div>
+          <p>
+            The Watson API also provided some interesting keyword analysis which, due to the scope of this project, may have been too ambitious to undertake.
+            The keyword analysis offered some sentiment analysis on the words used and their tones, which could also have been useful to analyse broadly to investigate
+            if there exists other patterns which may reveal more insight.
+          </p>
         </div>
       </div>
     </div>

@@ -44,6 +44,14 @@ pre code {
   height: 100%;
 }
 
+div#poem-structure-examples {
+  padding: 10px;
+}
+
+div#poem-structure-examples table {
+  margin: 0 auto;
+}
+
 #footer-text {
   padding: 10px;
 }
