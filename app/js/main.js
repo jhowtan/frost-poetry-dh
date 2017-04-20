@@ -153,85 +153,6 @@ $(document).ready(function() {
     initToneScores(poem);
   }
 
-  /*****************
-  ** INITIALIZATION
-  *****************/
-
-  $('#wordFreqTable').DataTable( {
-    data: corpusWordCount,
-    columns: [{title: "Term"}, {title: "Count"}]
-  });
-
-  $('#structureTable').DataTable( {
-    data: structDataForTable,
-    columns: [
-        { title: "Title" },
-        { title: "Words" },
-        { title: "Types" },
-        { title: "Ratio" },
-        { title: "Words/Sentence" },
-        { title: "Collection" },
-        { title: "Year Published" },
-        { title: "Stanzas" },
-        { title: "Lines" },
-        { title: "Lines/Stanza" },
-        { title: "Words/Stanza" },
-        { title: "Words/Line" },
-    ]
-  });
-
-  nv.addGraph(function() {
-    let structureChart = nv.models.discreteBarChart()
-      .x(function(d) { return d.label })    //Specify the data accessors.
-      .y(function(d) { return d.value })
-      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-      .showValues(false);      //...instead, show the bar value right on top of each bar.
-    let structureChartData = d3.select('#structure-d3 svg');
-    structureChartData.datum(generateData('lines', false, parseFloat, 5))
-        .transition().duration(500)
-        .call(structureChart);
-    nv.utils.windowResize(structureChart.update);
-    return structureChart;
-  });
-
-  nv.addGraph(function() {
-    let sentimentChart = nv.models.discreteBarChart()
-      .x(function(d) { return d.label })    //Specify the data accessors.
-      .y(function(d) { return d.value })
-      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-      .showValues(false)      //...instead, show the bar value right on top of each bar.
-      .showXAxis(false);
-    sentimentChart.yAxis.tickFormat((d3.format('.5f')))
-    let sentimentChartData = d3.select('#sentiment-d3 svg');
-    sentimentChartData.datum(generateSentimentData())
-        .transition().duration(500)
-        .call(sentimentChart);
-    nv.utils.windowResize(sentimentChart.update);
-    return sentimentChart;
-  });
-
-  nv.addGraph(function() {
-    var chart = nv.models.boxPlotChart()
-        .x(function(d) { return d.label })
-        .staggerLabels(true)
-        .maxBoxWidth(100) // prevent boxes from being incredibly wide
-        .yDomain([-0.8, 0.1])
-        ;
-    let f = frostData.filter((el) =>{
-      return el.sentiment.document.score < 0;
-    });
-    let scoreList = f.map((el) => {
-      return el.sentiment.document.score;
-    });
-    let data = [];
-    data.push(generateBoxPlotData("Negative Sentiments Boxplot", scoreList));
-    d3.select('#boxplot-d3 svg')
-        .datum(data)
-        .call(chart);
-    nv.utils.windowResize(chart.update);
-    return chart;
-  });
-
   function toneBoxPlots() {
     let tones = {
       emotion: {
@@ -349,6 +270,132 @@ $(document).ready(function() {
         return chart;
     });
   }
+
+  function keywordDataTable() {
+    let dataArray = [];
+    pK = frostData.map((el) => {
+      return {
+        title: el.title,
+        keywords: el.keywords
+      };
+    });
+    pK.map((poem) => {
+      poem.keywords.forEach((kw)=> {
+        dataArray.push(
+           {
+            title: poem.title,
+            keyword: kw.text,
+            sentiment: kw.sentiment.score,
+            relevance: kw.relevance,
+            emotion_sadness: kw.emotion ? kw.emotion.sadness : 0,
+            emotion_joy: kw.emotion ? kw.emotion.joy : 0,
+            emotion_fear: kw.emotion ? kw.emotion.fear : 0,
+            emotion_disgust: kw.emotion ? kw.emotion.disgust : 0,
+            emotion_anger: kw.emotion ? kw.emotion.anger : 0
+          }
+        );
+      });
+    });
+    dataArray = dataArray.map((el) => {
+      return Object.values(el)
+    })
+    return dataArray;
+  }
+
+
+  /*****************
+  ** INITIALIZATION
+  *****************/
+
+  $('#wordFreqTable').DataTable( {
+    data: corpusWordCount,
+    columns: [{title: "Term"}, {title: "Count"}]
+  });
+
+  $('#structureTable').DataTable( {
+    data: structDataForTable,
+    columns: [
+        { title: "Title" },
+        { title: "Words" },
+        { title: "Types" },
+        { title: "Ratio" },
+        { title: "Words/Sentence" },
+        { title: "Collection" },
+        { title: "Year Published" },
+        { title: "Stanzas" },
+        { title: "Lines" },
+        { title: "Lines/Stanza" },
+        { title: "Words/Stanza" },
+        { title: "Words/Line" },
+    ]
+  });
+
+  $('#keywordSentimentTable').DataTable( {
+    data: keywordDataTable(),
+    columns: [
+        { title: "Title" },
+        { title: "Keyword" },
+        { title: "Sentiment" },
+        { title: "Relevance" },
+        { title: "Sadness" },
+        { title: "Joy" },
+        { title: "Fear" },
+        { title: "Disgust" },
+        { title: "Anger" }
+    ]
+  });
+
+  nv.addGraph(function() {
+    let structureChart = nv.models.discreteBarChart()
+      .x(function(d) { return d.label })    //Specify the data accessors.
+      .y(function(d) { return d.value })
+      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+      .showValues(false);      //...instead, show the bar value right on top of each bar.
+    let structureChartData = d3.select('#structure-d3 svg');
+    structureChartData.datum(generateData('lines', false, parseFloat, 5))
+        .transition().duration(500)
+        .call(structureChart);
+    nv.utils.windowResize(structureChart.update);
+    return structureChart;
+  });
+
+  nv.addGraph(function() {
+    let sentimentChart = nv.models.discreteBarChart()
+      .x(function(d) { return d.label })    //Specify the data accessors.
+      .y(function(d) { return d.value })
+      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+      .showValues(false)      //...instead, show the bar value right on top of each bar.
+      .showXAxis(false);
+    sentimentChart.yAxis.tickFormat((d3.format('.5f')))
+    let sentimentChartData = d3.select('#sentiment-d3 svg');
+    sentimentChartData.datum(generateSentimentData())
+        .transition().duration(500)
+        .call(sentimentChart);
+    nv.utils.windowResize(sentimentChart.update);
+    return sentimentChart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.boxPlotChart()
+        .x(function(d) { return d.label })
+        .staggerLabels(true)
+        .maxBoxWidth(100) // prevent boxes from being incredibly wide
+        .yDomain([-0.8, 0.1])
+        ;
+    let f = frostData.filter((el) =>{
+      return el.sentiment.document.score < 0;
+    });
+    let scoreList = f.map((el) => {
+      return el.sentiment.document.score;
+    });
+    let data = [];
+    data.push(generateBoxPlotData("Negative Sentiments Boxplot", scoreList));
+    d3.select('#boxplot-d3 svg')
+        .datum(data)
+        .call(chart);
+    nv.utils.windowResize(chart.update);
+    return chart;
+  });
 
   initToneScores(theRoadNotTaken);
   toneBoxPlots();
