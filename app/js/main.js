@@ -334,7 +334,7 @@ $(document).ready(function() {
     data: keywordDataTable(),
     columns: [
         { title: "Title" },
-        { title: "Keyword" },
+        { title: "Keyword(s)" },
         { title: "Sentiment" },
         { title: "Relevance" },
         { title: "Sadness" },
