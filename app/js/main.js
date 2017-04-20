@@ -103,8 +103,8 @@ $(document).ready(function() {
     let q2 = scoreList[Math.ceil(0.5 * scoreList.length)-1];
     let q3 = scoreList[Math.ceil(0.75 * scoreList.length)-1];
     let iqr = q3 - q1;
-    let whisker_low = q1 - 1.5*iqr;
-    let whisker_high = q3 + 1.5*iqr
+    let whisker_low = q1 - (1.5*iqr);
+    let whisker_high = q3 + (1.5*iqr);
     let outliers = scoreList.filter((el)=> {
       if (el < whisker_low) { return true; }
       if (el > whisker_high) { return true; }
@@ -233,60 +233,121 @@ $(document).ready(function() {
   });
 
   function toneBoxPlots() {
-    let categoryList = frostData.map((el) => {
-        return el.document_tone.tone_categories;
-    });
-    console.log("CategoryList", categoryList);
-    let data = [];
-    for (var i = 0; i<categoryList.length; i++) {
-      let selector = `#${categoryList.category_id}-d3`;
-      data = [];
-      let list = categoryList[i];
-      for (var j = 0; j<list.length; j++) {
-        let data = [];
-        data.push(generateBoxPlotData(`${list[j].category_name} Boxplot`, list[j].tones));
+    let tones = {
+      emotion: {
+        anger: [],
+        disgust: [],
+        fear: [],
+        joy: [],
+        sadness: []
+      },
+      social: {
+        analytical: [],
+        confident: [],
+        tentative: []
+      },
+      language: {
+        openness: [],
+        conscientiousness: [],
+        extraversion: [],
+        agreeableness: [],
+        emotional_range: []
       }
-      nv.addGraph(function() {
-          var chart = nv.models.boxPlotChart()
-              .x(function(d) { return d.label })
-              .staggerLabels(true)
-              .maxBoxWidth(100) // prevent boxes from being incredibly wide
-              .yDomain([0.00, 1.00]);
+    };
+    frostData.forEach((el) => {
+      tones.emotion.anger.push(el.document_tone.tone_categories[0].tones[0]);
+      tones.emotion.disgust.push(el.document_tone.tone_categories[0].tones[1]);
+      tones.emotion.fear.push(el.document_tone.tone_categories[0].tones[2]);
+      tones.emotion.joy.push(el.document_tone.tone_categories[0].tones[3]);
+      tones.emotion.sadness.push(el.document_tone.tone_categories[0].tones[4]);
+      tones.social.analytical.push(el.document_tone.tone_categories[1].tones[0]);
+      tones.social.confident.push(el.document_tone.tone_categories[1].tones[1]);
+      tones.social.tentative.push(el.document_tone.tone_categories[1].tones[2]);
+      tones.language.openness.push(el.document_tone.tone_categories[2].tones[0]);
+      tones.language.conscientiousness.push(el.document_tone.tone_categories[2].tones[1]);
+      tones.language.extraversion.push(el.document_tone.tone_categories[2].tones[2]);
+      tones.language.agreeableness.push(el.document_tone.tone_categories[2].tones[3]);
+      tones.language.emotional_range.push(el.document_tone.tone_categories[2].tones[4]);
+    });
 
-          d3.select(selector + ' svg')
-              .datum(data)
-              .call(chart);
-          nv.utils.windowResize(chart.update);
+    tones.emotion.anger = generateBoxPlotData('Anger Tone Boxplot', tones.emotion.anger.map((el)=>{return el.score;}));
+    tones.emotion.disgust = generateBoxPlotData('Disgust Tone Boxplot', tones.emotion.disgust.map((el)=>{return el.score;}));
+    tones.emotion.fear = generateBoxPlotData('Fear Tone Boxplot', tones.emotion.fear.map((el)=>{return el.score;}));
+    tones.emotion.joy = generateBoxPlotData('Joy Tone Boxplot', tones.emotion.joy.map((el)=>{return el.score;}));
+    tones.emotion.sadness = generateBoxPlotData('Sadness Tone Boxplot', tones.emotion.sadness.map((el)=>{return el.score;}));
+    tones.social.analytical = generateBoxPlotData('Analytical Tone Boxplot', tones.social.analytical.map((el)=>{return el.score;}));
+    tones.social.confident = generateBoxPlotData('Confident Tone Boxplot', tones.social.confident.map((el)=>{return el.score;}));
+    tones.social.tentative = generateBoxPlotData('Tentative Tone Boxplot', tones.social.tentative.map((el)=>{return el.score;}));
+    tones.language.openness = generateBoxPlotData('Disgust Tone Boxplot', tones.language.openness.map((el)=>{return el.score;}));
+    tones.language.conscientiousness = generateBoxPlotData('Conscientiousness Tone Boxplot', tones.language.conscientiousness.map((el)=>{return el.score;}));
+    tones.language.extraversion = generateBoxPlotData('Extraversion Tone Boxplot', tones.language.extraversion.map((el)=>{return el.score;}));
+    tones.language.agreeableness = generateBoxPlotData('Agreeableness Tone Boxplot', tones.language.agreeableness.map((el)=>{return el.score;}));
+    tones.language.emotional_range = generateBoxPlotData('Emotional Range Tone Boxplot', tones.language.emotional_range.map((el)=>{return el.score;}));
 
-          return chart;
-        });
-    }
-    // categoryList.forEach((list) => {
-    //   console.log("List", list);
-    //   let selector = `#${list.category_id}-d3`;
+    let data1 = [];
+    let selector1 = '#emotion_tone-d3';
+    data1.push(tones.emotion.anger);
+    data1.push(tones.emotion.disgust);
+    data1.push(tones.emotion.fear);
+    data1.push(tones.emotion.joy);
+    data1.push(tones.emotion.sadness);
+    let data2 = [];
+    let selector2 = '#language_tone-d3';
+    data2.push(tones.language.openness);
+    data2.push(tones.language.conscientiousness);
+    data2.push(tones.language.extraversion);
+    data2.push(tones.language.agreeableness);
+    data2.push(tones.language.emotional_range);
+    let data3 = [];
+    let selector3 = '#social_tone-d3';
+    data3.push(tones.social.analytical);
+    data3.push(tones.social.confident);
+    data3.push(tones.social.tentative);
 
-    //   nv.addGraph(function() {
-    //     console.log('List in addGraph', list);
-    //     var chart = nv.models.boxPlotChart()
-    //         .x(function(d) { return d.label })
-    //         .staggerLabels(true)
-    //         .maxBoxWidth(100) // prevent boxes from being incredibly wide
-    //         .yDomain([0.00, 1.00]);
+    nv.addGraph(function() {
+        var chart = nv.models.boxPlotChart()
+            .x(function(d) { return d.label })
+            .staggerLabels(true)
+            .maxBoxWidth(100) // prevent boxes from being incredibly wide
+            .yDomain([-1.00, 1.00]);
 
-    //     let data = [];
-    //     list.forEach((el) => {
-    //       console.log('Enum list', el.tones);
-    //       data.push(generateBoxPlotData(`${el.category_name} Boxplot`, el.tones));
-    //     });
-    //     console.log('Data', data);
-    //     d3.select(selector + ' svg')
-    //         .datum(data)
-    //         .call(chart);
-    //     nv.utils.windowResize(chart.update);
+        d3.select(selector1 + ' svg')
+            .datum(data1)
+            .call(chart);
+        nv.utils.windowResize(chart.update);
 
-    //     return chart;
-    //   });
-    // });
+        return chart;
+    });
+
+    nv.addGraph(function() {
+        var chart = nv.models.boxPlotChart()
+            .x(function(d) { return d.label })
+            .staggerLabels(true)
+            .maxBoxWidth(100) // prevent boxes from being incredibly wide
+            .yDomain([-1.00, 1.00]);
+
+        d3.select(selector2 + ' svg')
+            .datum(data2)
+            .call(chart);
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+    });
+
+    nv.addGraph(function() {
+        var chart = nv.models.boxPlotChart()
+            .x(function(d) { return d.label })
+            .staggerLabels(true)
+            .maxBoxWidth(100) // prevent boxes from being incredibly wide
+            .yDomain([-1.00, 1.00]);
+
+        d3.select(selector3 + ' svg')
+            .datum(data3)
+            .call(chart);
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+    });
   }
 
   initToneScores(theRoadNotTaken);
