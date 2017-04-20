@@ -89,8 +89,12 @@
             <li>Others (a set of 5 others)</li>
           </ul>
           <p>
-            This project begins with the hypothesis that there is something structurally different about Frost's "The Road Not Taken" from the others. This may be a cause for the misreading of the
-            poem. While this project may have a focus on "The Road Not Taken", we will be looking at all of Frost's work (that was retrieved for this study) in the hopes
+            This project begins with the hypothesis that there is something that stands out about Frost's "The Road Not Taken" from others which may correlate with its popularity.
+            We will be examining the poem at both the structural level, assisted by textual analysis tools, and statistical analysis from tone scores retrieved from Natural Language Processing
+            performed by IBM Watson.
+          </p>
+          <p>
+            While this project may have a focus on "The Road Not Taken", we will be looking at all of Frost's work (that was retrieved for this study) in the hopes
             that there will be interesting patterns across the different poems which can reveal new insight into Frost's poetry.
           </p>
         </div>
@@ -105,7 +109,7 @@
       </div>
       <div class="row">
         <div class="col-sm-12 col-md-offset-2 col-md-8">
-          <h2 class="text-center">Information Retrieval</h2>
+          <h2 class="text-center">Extract, Transform, Load</h2>
           <p>
             To begin the study, I had to first retrieve and build the corpus. There's <a href="https://archive.org/details/poemsofrobertfro029898mbp">an online source for a complete collection of Robert Frost's poetry in entirety</a>.
             However, it wasn't properly OCR'd, and I had to look for a way to extract data in a way that can be used separately rather than in one contiguous text form.
@@ -122,7 +126,10 @@
             The reason I wanted to build the poem samples separately was due to the intentions of using Voyant Tools to run a corpus analysis on the text.
             By having the poems in separate documents, it was clearer to view the document differences in Voyant.
           </p>
-          <p>You may refer to the scripts used to generate the corpus and data for this project <a href="https://github.com/jhowtan/frost-poetry-dh/tree/master/scripts">here</a>.</p>
+          <p>You may refer to the scripts used to generate the corpus and for data preparation <a href="https://github.com/jhowtan/frost-poetry-dh/tree/master/scripts">here</a>.</p>
+          <p>
+            Download: <a href="./corpus.zip">Corpus</a>
+          </p>
         </div>
         <div class="col-sm-12 col-md-offset-2 col-md-8">
           <h2 class="text-center">Voyant Tools</h2>
@@ -228,7 +235,11 @@
       </div>
       <div class="row">
         <div class="col-sm-offset-2 col-sm-8">
-          <table id="wordFreqTable" class="display" cellspacing="0" width="100%"></table>
+          <div class="panel panel-default">
+            <div class="panel-body" style="padding: 10px;">
+              <table id="wordFreqTable" class="display" cellspacing="0" width="100%"></table>
+            </div>
+          </div>
         </div>
         <div class="col-sm-12">
           <h2 class="text-center">More data, more luck</h2>
@@ -266,7 +277,11 @@
           </p>
         </div>
         <div class="col-sm-12">
-          <table id="structureTable" class="display" cellspacing="0" width="100%"></table>
+          <div class="panel panel-default">
+            <div class="panel-body" style="padding: 10px;">
+              <table id="structureTable" class="display" cellspacing="0" width="100%"></table>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -391,7 +406,8 @@
             </p>
             <p>
               In this section, I have also provided a switch for readers to switch between all poetry that can be obtained from this corpus, beginning from 1909 to 1922.
-              Select another poem to observe the changes in the tone scores.
+              Select another poem to observe the changes in the tone scores. Results from these three panels can be compared to the boxplots generated below to compare
+              the tone scores against the collection of poems at large.
               For more information on what the scores mean: <a href="https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understand-tone.html">Understand your tone score</a>.
             </p>
           </div>
@@ -444,14 +460,14 @@
               </div>
               <div class="col-md-4">
                 <div class="panel panel-default">
-                  <div class="panel-heading">Social Tone</div>
+                  <div class="panel-heading">Language Tone</div>
                   <div class="panel-body">
                     <label id="analytical-bar-label" for="analytical-bar">Analytical</label>
                     <div class="progress">
                       <div class="progress-bar" id="analytical-bar" role="progressbar">
                       </div>
                     </div>
-                    <label id="confident-bar-label" for="confident-bar">Confident</label>
+                    <label id="confident-bar-label" for="confident-bar">Confidence</label>
                     <div class="progress">
                       <div class="progress-bar" id="confident-bar" role="progressbar">
                       </div>
@@ -466,7 +482,7 @@
               </div>
               <div class="col-md-4">
                 <div class="panel panel-default">
-                  <div class="panel-heading">Language Tone</div>
+                  <div class="panel-heading">Social Tone</div>
                   <div class="panel-body">
                     <label id="openness_big5-bar-label" for="openness_big5-bar">Openness</label>
                     <div class="progress">
@@ -504,7 +520,16 @@
               </div>
               <div class="col-xs-12 col-md-6">
                 <h2>Emotional Tone Boxplot</h2>
-                <p>Lorem ipsum lorem lorem ipsum</p>
+                <p>
+                  Looking at the boxplots for each of the emotional tone vectors retrieved from the data, we can see that there is very little
+                  variance between the Anger and Disgust emotions, as well as the fact that the range of scores also indicate that Frost's poetry
+                  is also not reflective of those tones in his expression.
+                </p>
+                <p>
+                  On the other hand, there is greatest variance in Fear and Joy across his poems. "The Road Not Taken" has been deemed unlikely
+                  to be conveying any of these emotions according to the legend (scores of less than 0.5 indicates that it is unlikely) as seen
+                  from above in the Emotional Tone panel.
+                </p>
               </div>
             </div>
             <div class="row">
@@ -514,8 +539,16 @@
                 </div>
               </div>
               <div class="col-xs-12 col-md-6">
-                <h2>Social Tone Boxplot</h2>
-                <p>Lorem ipsum lorem lorem ipsum</p>
+                <h2>Language Tone Boxplot</h2>
+                <p>
+                  It was interesting to observe that none of the poems were scored for Confidence in terms of the language tone, which implies
+                  that there is no evidence of confidence in the tone of the poems.
+                </p>
+                <p>
+                  On the other hand, tentativeness has the largest variance, which reveals a varying degree of inhibition that Frost has in his language
+                  expressed in the poems. As the bulk of the scores appear to be a low value score (less than 0.5), implying that there is little evidence of these tones in the poetry,
+                  Nothing conclusive can be said about these language tone scores.
+                </p>
               </div>
             </div>
             <div class="row">
@@ -525,29 +558,44 @@
                 </div>
               </div>
               <div class="col-xs-12 col-md-6">
-                <h2>Language Tone Boxplot</h2>
-                <p>Lorem ipsum lorem lorem ipsum</p>
+                <h2>Social Tone Boxplot</h2>
+                <p>Lastly, the social tones in his poems are analysed according to the Big Five personality model.</p>
+                <p>
+                  While it may seem like a long shot, we can infer the characteristics of Frost's personality through his text based on the spread of these results.
+                  We see that there is some likely evidence of Openneess and Agreeableness in Frost's poetry, which stand out more than the other personality traits.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <table class="display" cellspacing="0" width="100%" id="keywordSentimentTable"></table>
-        </div>
-      </div>
     </div>
-
     <div class="container-fluid" id="conclusion">
       <div class="row">
-        <div class="col-sm-12 text-center">
-          <h1 class="section-header text-center">Conclusion and Reflections</h1>
+        <div class="col-sm-12">
+          <h1 class="section-header text-center">Conclusion</h1>
         </div>
         <div class="col-sm-offset-2 col-sm-8">
-          <h2>Limitations</h2>
           <p>
-            As the field of Digital Humanities is still rather new, there seems to be a lack of best practices and documentation going around for how to
+            Structurally, it does not seem like anything much stands out from the poem compared to the others. As it stands, it seems that I am unable to conclude on this point,
+            which may be because I may not be looking at the right parameters.
+          </p>
+          <p>
+            It would be presumptuous to make sweeping statements about "The Road Not Taken" based on the findings that this study has provided and shown. While the poem
+            may have stood out in terms of its negative sentiment score, each and every poem written by Frost should not be trivialised to a score. It was also interesting
+            to note the differences that "The Road Not Taken" has with the rest of the poems as a whole, perhaps more can be done by segmenting according to their collections,
+            or perhaps across time periods (maybe according to the year of publishing) to gain a more granular understanding of the differences in the poems.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 class="section-header text-center">Reflections</h1>
+        </div>
+        <div class="col-sm-offset-2 col-sm-8">
+          <h2 class="text-center">Limitations</h2>
+          <p>
+            As Digital Humanities is like an 'open sandbox' field of study, there seems to be a lack of best practices and documentation going around for how to
             approach the analysis of literary text (in this case). Most tools that are provided by scientists and DH scholars mostly tell you what they are for,
             but not quite thoroughly on how to use them effectively. For instance, with Voyant Tools, unless I have had the literary training to approach the subject,
             the visualisations and content distilled from the corpus meant very little to me, and it was also hard to spot any patterns unless further manipulation
@@ -559,24 +607,24 @@
             distinctively discrete (many published in the same year). It was also hard to discern what would be a good approach to choose parameters for analysis because
             properties like word count seem so arbitrary and lack meaning unless applied to an appropriate context.
           </p>
-          <h2>Training (or lack thereof)</h2>
+          <h2 class="text-center">Academic Training (or lack thereof)</h2>
           <p>
             It would perhaps been better should I have been more rigorously grounded in any of the relevant areas in this DH study. These areas include the domains of
             statistical analysis, and literary training. My main concern was that I was trying hard not to force the data in any way to fit the hypothesis I was testing for.
             There would undoubtedly be more that I could have looked into, perhaps with fairer comparison methods to gain a more objective point of view on the corpus.
             That said, I am also sure that there may be biases that will be implicated.
           </p>
-          <h2>Defining a Scope</h2>
+          <h2 class="text-center">Deciding on Scope</h2>
           <p>
-            I tried adopting a storytelling approach to this project. I assumed some basic premises for me to set off on this journey of discovery
-            based on the text corpus, as well as statistic analysis on the Watson data. Then I went on to bring the reader (you!) through my thought processes
+            I tried adopting a storytelling approach to this project. I assumed some basic premises before setting off on this journey of discovery
+            based on the text corpus and statistic analysis on the Watson data. Then I went on to bring the reader (you!) through my thought processes
             and the methods I've used to visualise and investigate the corpus. I found this to be an interesting manner of representing my stream of consciousness
             when looking at the results of the textual analysis tools, but it was also risky should there be inconclusive results from the findings.
           </p>
             Choosing a topic to look into has probably been the hardest part for this project since the DH methods are so broadly applied, and it seemed as though
             I had to be careful not to treat the digital methods as a hammer to every nail.
           </p>
-          <h2>Further Extensions</h2>
+          <h2 class="text-center">Further Extensions</h2>
           <p>
             There is definitely more that one can do with the data, even from such a small scope of 90 poems. With more poems (and text) to be put through such
             methods, I am sure there can be more insights to be derived from such works.
@@ -684,8 +732,25 @@
             </table>
             <small> Source: (Poetry) Form - <a href="www.frostfriends.org/form.html#form">www.frostfriends.org/form.html</a></small>
           </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-body" style="padding: 10px;">
+                  <table class="display" cellspacing="0" width="100%" id="keywordSentimentTable"></table>
+                </div>
+              </div>
+            </div>
+          </div>
           <p>
-            The Watson API also provided some interesting keyword analysis which is displayed above after the tone analysis.
+            The Watson API also provided some interesting results in terms of its keyword analysis as shown in the table above.
+          </p>
+          <p>
+            Keywords are not retrieved the way it was done on Voyant Tools, whereby words are looked at singularly. Rather, it seems to have generated n-grams (up to 2) of
+            the keywords found in each poem (according to the relevance to the overall body of the poem). The relevance scores for each term are ranked for each of the 10 terms
+            (I specified a return of the top 10 most relevant terms, but the API service is able to accommodate more), and a sentiment value, amongst others like the emotion tone
+            scores for the keywords are also provided in the table above, much like what we have gathered in the <a href="#tone">Tone Analysis section</a>.
+          </p>
+          <p>
             By exploring this set of keywords further, we may be able to find more useful and interesting relationships with the overall corpus as compared to plainly using
             Voyant Tools. For the scope of this project, efforts to pursue this aspect of the analysis is too ambitious and excessive to undertake.
             The keyword analysis offered some sentiment analysis on the words used and their tones, which could also have been useful to analyse broadly to investigate
@@ -697,7 +762,7 @@
 
     <div class="container-fluid">
       <footer>
-        <div class="text-center" id="footer-text">&copy; Jonathan Tan for Digital Humanities (AY17SEM2 GEK2050)</div>
+        <div class="text-center" id="footer-text">&copy; Jonathan Tan | NUS Digital Humanities (AY17SEM2 GEK2050)</div>
       </footer>
     </div>
     <!-- /container -->

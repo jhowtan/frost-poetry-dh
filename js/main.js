@@ -191,19 +191,19 @@ $(document).ready(function() {
       tones.language.emotional_range.push(el.document_tone.tone_categories[2].tones[4]);
     });
 
-    tones.emotion.anger = generateBoxPlotData('Anger Tone Boxplot', tones.emotion.anger.map((el)=>{return el.score;}));
-    tones.emotion.disgust = generateBoxPlotData('Disgust Tone Boxplot', tones.emotion.disgust.map((el)=>{return el.score;}));
-    tones.emotion.fear = generateBoxPlotData('Fear Tone Boxplot', tones.emotion.fear.map((el)=>{return el.score;}));
-    tones.emotion.joy = generateBoxPlotData('Joy Tone Boxplot', tones.emotion.joy.map((el)=>{return el.score;}));
-    tones.emotion.sadness = generateBoxPlotData('Sadness Tone Boxplot', tones.emotion.sadness.map((el)=>{return el.score;}));
-    tones.social.analytical = generateBoxPlotData('Analytical Tone Boxplot', tones.social.analytical.map((el)=>{return el.score;}));
-    tones.social.confident = generateBoxPlotData('Confident Tone Boxplot', tones.social.confident.map((el)=>{return el.score;}));
-    tones.social.tentative = generateBoxPlotData('Tentative Tone Boxplot', tones.social.tentative.map((el)=>{return el.score;}));
-    tones.language.openness = generateBoxPlotData('Disgust Tone Boxplot', tones.language.openness.map((el)=>{return el.score;}));
-    tones.language.conscientiousness = generateBoxPlotData('Conscientiousness Tone Boxplot', tones.language.conscientiousness.map((el)=>{return el.score;}));
-    tones.language.extraversion = generateBoxPlotData('Extraversion Tone Boxplot', tones.language.extraversion.map((el)=>{return el.score;}));
-    tones.language.agreeableness = generateBoxPlotData('Agreeableness Tone Boxplot', tones.language.agreeableness.map((el)=>{return el.score;}));
-    tones.language.emotional_range = generateBoxPlotData('Emotional Range Tone Boxplot', tones.language.emotional_range.map((el)=>{return el.score;}));
+    tones.emotion.anger = generateBoxPlotData('Anger', tones.emotion.anger.map((el)=>{return el.score;}));
+    tones.emotion.disgust = generateBoxPlotData('Disgust', tones.emotion.disgust.map((el)=>{return el.score;}));
+    tones.emotion.fear = generateBoxPlotData('Fear', tones.emotion.fear.map((el)=>{return el.score;}));
+    tones.emotion.joy = generateBoxPlotData('Joy', tones.emotion.joy.map((el)=>{return el.score;}));
+    tones.emotion.sadness = generateBoxPlotData('Sadness', tones.emotion.sadness.map((el)=>{return el.score;}));
+    tones.social.analytical = generateBoxPlotData('Analytical', tones.social.analytical.map((el)=>{return el.score;}));
+    tones.social.confident = generateBoxPlotData('Confidence', tones.social.confident.map((el)=>{return el.score;}));
+    tones.social.tentative = generateBoxPlotData('Tentative', tones.social.tentative.map((el)=>{return el.score;}));
+    tones.language.openness = generateBoxPlotData('Openness', tones.language.openness.map((el)=>{return el.score;}));
+    tones.language.conscientiousness = generateBoxPlotData('Conscientiousness', tones.language.conscientiousness.map((el)=>{return el.score;}));
+    tones.language.extraversion = generateBoxPlotData('Extraversion', tones.language.extraversion.map((el)=>{return el.score;}));
+    tones.language.agreeableness = generateBoxPlotData('Agreeableness', tones.language.agreeableness.map((el)=>{return el.score;}));
+    tones.language.emotional_range = generateBoxPlotData('Emotional Range', tones.language.emotional_range.map((el)=>{return el.score;}));
 
     let data1 = [];
     let selector1 = '#emotion_tone-d3';
